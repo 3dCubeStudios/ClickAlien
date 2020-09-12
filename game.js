@@ -24,6 +24,11 @@ var GameScene1 = new Phaser.Class({
     txt1.setFontSize(50);
     txt1.setOrigin(0.4, -2);
 
+    var welcome = this.add.text(200, 280,"Aliens are invading you must stop them before they reach earth and destroy it!");
+    welcome.setOrigin(0.22,-11);
+    var instructions = this.add.text(200, 280,"Instructions: Click on the aliens to destroy them.");
+    instructions.setOrigin(0,-20);
+
     txt2.setInteractive();
 
     txt1.setInteractive({ useHandCursor: true });
@@ -61,6 +66,7 @@ var GameScene2 = new Phaser.Class({
     this.load.image("ship2", "assets/ship2.png");
     this.load.image("ship1", "assets/ship1.png");
     this.load.image("sky", "assets/sky.png");
+  
   },
 
   create: function () {
@@ -149,7 +155,17 @@ var GameScene2 = new Phaser.Class({
     if (count == 5) {
       var Win = this.add.text(360, 280, "You Win!!!");
       Win.setFontSize(50);
-      Win.setOrigin(0.4, -2);
+      Win.setOrigin(0.4,0);
+
+      var playAgain = this.add.text(360, 280, "Play again?");
+      playAgain.setFontSize(50);
+      playAgain.setOrigin(0.4, -2);
+      playAgain.setInteractive().on("pointerdown", function () {
+        //Let's start another scene with start
+        this.scene.scene.start("GameScene1");
+        
+        count = 0;
+      });
     }
   },
   moveShip(ship, speed) {
@@ -180,6 +196,10 @@ var config = {
   physics: {
     default: "arcade",
   },
+  scale: {
+    //we place it in the middle of the page.
+    autoCenter: Phaser.Scale.CENTER_BOTH
+},
   //set background color
   backgroundColor: 0x27ae60,
 
